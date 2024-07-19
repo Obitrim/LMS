@@ -12,6 +12,7 @@
     }
   ],
   "compilerOptions": {
-    "module": "NodeNext"
+    "module": "NodeNext",
+    "lib": ["es5", "es6", "dom", "dom.iterable"]
   }
 }
