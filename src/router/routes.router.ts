@@ -1,8 +1,10 @@
 import DashboardLayout from '@/components/layout/DashboardLayout.vue'
+import AuthRegistration from '@/components/auth/AuthRegistration.vue'
 import DashboardHome from '@/views/app/DashboardHome.vue'
 import AuthView from '@/views/AuthView.vue'
 import HomeView from '@/views/HomeView.vue'
 import type { RouteRecordRaw } from 'vue-router'
+import AuthLogin from '@/components/auth/AuthLogin.vue'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -17,7 +19,19 @@ const routes: RouteRecordRaw[] = [
     path: '/auth',
     name: 'auth',
     meta: { requiresAuth: false },
-    component: AuthView
+    component: AuthView,
+    children: [
+      {
+        path: 'register',
+        name: 'signup',
+        component: AuthRegistration
+      },
+      {
+        path: 'login',
+        name: 'login',
+        component: AuthLogin
+      }
+    ]
   },
   {
     path: '/app',
