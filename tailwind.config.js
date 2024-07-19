@@ -4,7 +4,8 @@ export default {
   theme: {
     extend: {
       colors: {
-        charcoal: '#36454F'
+        charcoal: '#36454F',
+        lemonYellow: '#decc43'
       }
     }
   },
