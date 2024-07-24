@@ -17,6 +17,8 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@vue-hero-icons/outline": "^1.7.2",
+    "@vue-hero-icons/solid": "^1.7.2",
     "@vuelidate/core": "^2.0.3",
     "@vuelidate/validators": "^2.0.4",
     "nanoid": "^5.0.7",
