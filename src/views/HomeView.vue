@@ -10,9 +10,8 @@
     ></div>
     <div class="container h-screen grid md:grid-cols-2 content-center gap-10 relative z-10">
       <!-- logo -->
-      <router-link to="/" class="absolute left-4 top-4">
-        <img src="/images/logo.png" alt="logo" class="w-12 h-auto" />
-      </router-link>
+      <AppLogo class="absolute left-4 top-4" />
+
       <section>
         <h1 :class="[' text-3xl md:text-5xl font-bold']">Streamline Leave Management with Ease</h1>
         <p class="my-8 text-lg">
@@ -50,6 +49,7 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
+import AppLogo from '@/components/shared/AppLogo.vue'
 
 const router = useRouter()
 
