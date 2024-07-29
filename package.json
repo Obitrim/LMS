@@ -17,13 +17,14 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@vue-hero-icons/outline": "^1.7.2",
-    "@vue-hero-icons/solid": "^1.7.2",
+    "@iconify/vue": "^4.1.2",
     "@vuelidate/core": "^2.0.3",
     "@vuelidate/validators": "^2.0.4",
+    "echarts": "^5.5.1",
     "nanoid": "^5.0.7",
     "pinia": "^2.1.7",
     "vue": "^3.4.29",
+    "vue-echarts": "^7.0.0-beta.0",
     "vue-router": "^4.3.3"
   },
   "devDependencies": {
