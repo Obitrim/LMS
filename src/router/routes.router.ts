@@ -1,13 +1,14 @@
-import DashboardLayout from '@/components/layout/DashboardLayout.vue'
-import AuthRegistration from '@/components/auth/AuthRegistration.vue'
-import AuthView from '@/views/AuthView.vue'
-import HomeView from '@/views/HomeView.vue'
-import type { RouteRecordRaw } from 'vue-router'
-import AuthLogin from '@/components/auth/AuthLogin.vue'
+import DashboardLayout from '@/components/layout/DashboardLayout.vue';
+import AuthRegistration from '@/components/auth/AuthRegistration.vue';
+import AuthView from '@/views/AuthView.vue';
+import HomeView from '@/views/HomeView.vue';
+import type { RouteRecordRaw } from 'vue-router';
+import AuthLogin from '@/components/auth/AuthLogin.vue';
 
-import DashboardHome from '@/views/app/DashboardHome.vue'
-import EmployeeList from '@/views/app/EmployeeList.vue'
-import LeaveList from '@/views/app/LeaveList.vue'
+import DashboardHome from '@/views/app/DashboardHome.vue';
+import EmployeeList from '@/views/app/EmployeeList.vue';
+import LeaveList from '@/views/app/LeaveList.vue';
+import LeavesHome from '@/views/app/leaves/LeavesHome.vue';
 
 const routes: RouteRecordRaw[] = [
   {
@@ -54,11 +55,24 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: '/leaves',
-        name: 'leave-list',
-        component: LeaveList
+        name: 'leaves',
+        // component: LeaveViewsLayout,
+        redirect: { name: 'leave-home' },
+        children: [
+          {
+            path: '',
+            name: 'leave-home',
+            component: LeavesHome
+          },
+          {
+            path: 'requests',
+            name: 'leave-requests',
+            component: LeaveList
+          }
+        ]
       }
     ]
   }
-]
+];
 
-export default routes
+export default routes;
