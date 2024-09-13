@@ -1,14 +1,24 @@
-import DashboardLayout from '@/components/layout/DashboardLayout.vue';
-import AuthRegistration from '@/components/auth/AuthRegistration.vue';
-import AuthView from '@/views/AuthView.vue';
-import HomeView from '@/views/HomeView.vue';
+import HomeView from '@/static_pages/home/pages/HomeView.vue';
 import type { RouteRecordRaw } from 'vue-router';
-import AuthLogin from '@/components/auth/AuthLogin.vue';
 
-import DashboardHome from '@/views/app/DashboardHome.vue';
-import EmployeeList from '@/views/app/EmployeeList.vue';
-import LeaveList from '@/views/app/LeaveList.vue';
-import LeavesHome from '@/views/app/leaves/LeavesHome.vue';
+// Dashboard
+import DashboardHome from '@/dashboard/pages/DashboardHome.vue';
+import BaseDashboardLayout from '@/dashboard/components/layout/BaseDashboardLayout.vue';
+
+// Employee
+import EmployeeList from '@/employees/pages/EmployeeList.vue';
+
+// Leave
+import LeaveList from '@/leaves/pages/LeaveList.vue';
+import LeavesHome from '@/leaves/pages/LeavesHome.vue';
+
+// Authentication
+import AuthView from '@/authentication/components/layout/AuthLayout.vue';
+import SignupForm from '@/authentication/forms/SignupForm.vue';
+import LoginForm from '@/authentication/forms/LoginForm.vue';
+
+// Contract
+import ContractsHome from '@/contracts/pages/ContractsHome.vue';
 
 const routes: RouteRecordRaw[] = [
   {
@@ -28,12 +38,12 @@ const routes: RouteRecordRaw[] = [
       {
         path: 'register',
         name: 'signup',
-        component: AuthRegistration
+        component: SignupForm
       },
       {
         path: 'login',
         name: 'login',
-        component: AuthLogin
+        component: LoginForm
       }
     ]
   },
@@ -41,7 +51,7 @@ const routes: RouteRecordRaw[] = [
     path: '/app',
     name: 'app',
     meta: { requiresAuth: false },
-    component: DashboardLayout,
+    component: BaseDashboardLayout,
     children: [
       {
         path: '',
@@ -49,7 +59,7 @@ const routes: RouteRecordRaw[] = [
         component: DashboardHome
       },
       {
-        path: '/employees',
+        path: 'employees',
         name: 'employee-list',
         component: EmployeeList
       },
@@ -68,6 +78,19 @@ const routes: RouteRecordRaw[] = [
             path: 'requests',
             name: 'leave-requests',
             component: LeaveList
+          }
+        ]
+      },
+      {
+        path: '/contracts',
+        name: 'contracts',
+        // component: LeaveViewsLayout,
+        redirect: { name: 'contract-home' },
+        children: [
+          {
+            path: '',
+            name: 'contract-home',
+            component: ContractsHome
           }
         ]
       }
