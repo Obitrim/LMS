@@ -58,7 +58,7 @@ export interface IEmployee {
   annualLeaveEntitlement: number;
   sickLeaveEntitlement: number;
   leaveBalance: number;
-  leaveHistory: ILeave[];
+  leaveHistory: Partial<ILeave>[];
   performanceReviews: IPerformanceReview[];
   trainingCertifications: string[];
   skills: string[];

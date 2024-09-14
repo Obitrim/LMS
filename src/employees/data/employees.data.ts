@@ -35,8 +35,8 @@ export const employeeList: IEmployee[] = [
     sickLeaveEntitlement: 10,
     leaveBalance: 15,
     leaveHistory: [
-      { type: 'Annual', startDate: '2023-06-01', endDate: '2023-06-10' },
-      { type: 'Sick', startDate: '2023-07-15', endDate: '2023-07-17' }
+      { leaveType: 'Annual', startDate: '2023-06-01', endDate: '2023-06-10' },
+      { leaveType: 'Sick', startDate: '2023-07-15', endDate: '2023-07-17' }
     ],
     performanceReviews: [
       { date: '2023-01-01', summary: 'Exceeds expectations' },
@@ -94,8 +94,8 @@ export const employeeList: IEmployee[] = [
     sickLeaveEntitlement: 12,
     leaveBalance: 18,
     leaveHistory: [
-      { type: 'Annual', startDate: '2023-08-01', endDate: '2023-08-10' },
-      { type: 'Sick', startDate: '2023-09-05', endDate: '2023-09-06' }
+      { leaveType: 'Annual', startDate: '2023-08-01', endDate: '2023-08-10' },
+      { leaveType: 'Sick', startDate: '2023-09-05', endDate: '2023-09-06' }
     ],
     performanceReviews: [
       { date: '2023-02-01', summary: 'Outstanding performance' },
@@ -153,8 +153,8 @@ export const employeeList: IEmployee[] = [
     sickLeaveEntitlement: 15,
     leaveBalance: 10,
     leaveHistory: [
-      { type: 'Annual', startDate: '2023-04-15', endDate: '2023-04-25' },
-      { type: 'Sick', startDate: '2023-05-10', endDate: '2023-05-12' }
+      { leaveType: 'Annual', startDate: '2023-04-15', endDate: '2023-04-25' },
+      { leaveType: 'Sick', startDate: '2023-05-10', endDate: '2023-05-12' }
     ],
     performanceReviews: [
       { date: '2023-03-01', summary: 'Meets expectations' },
@@ -213,8 +213,8 @@ export const employeeList: IEmployee[] = [
     sickLeaveEntitlement: 15,
     leaveBalance: 13,
     leaveHistory: [
-      { type: 'Annual', startDate: '2023-07-23', endDate: '2023-01-24' },
-      { type: 'Sick', startDate: '2023-08-24', endDate: '2023-09-22' }
+      { leaveType: 'Annual', startDate: '2023-07-23', endDate: '2023-01-24' },
+      { leaveType: 'Sick', startDate: '2023-08-24', endDate: '2023-09-22' }
     ],
     performanceReviews: [
       { date: '2023-07-01', summary: 'Needs improvement' },
@@ -272,8 +272,8 @@ export const employeeList: IEmployee[] = [
     sickLeaveEntitlement: 19,
     leaveBalance: 10,
     leaveHistory: [
-      { type: 'Annual', startDate: '2023-06-16', endDate: '2023-02-20' },
-      { type: 'Sick', startDate: '2023-01-07', endDate: '2023-04-22' }
+      { leaveType: 'Annual', startDate: '2023-06-16', endDate: '2023-02-20' },
+      { leaveType: 'Sick', startDate: '2023-01-07', endDate: '2023-04-22' }
     ],
     performanceReviews: [
       { date: '2023-05-01', summary: 'Needs improvement' },
@@ -331,8 +331,8 @@ export const employeeList: IEmployee[] = [
     sickLeaveEntitlement: 16,
     leaveBalance: 0,
     leaveHistory: [
-      { type: 'Annual', startDate: '2023-06-25', endDate: '2023-02-21' },
-      { type: 'Sick', startDate: '2023-06-23', endDate: '2023-07-07' }
+      { leaveType: 'Annual', startDate: '2023-06-25', endDate: '2023-02-21' },
+      { leaveType: 'Sick', startDate: '2023-06-23', endDate: '2023-07-07' }
     ],
     performanceReviews: [
       { date: '2023-07-01', summary: 'Exceeds expectations' },
@@ -390,8 +390,8 @@ export const employeeList: IEmployee[] = [
     sickLeaveEntitlement: 12,
     leaveBalance: 8,
     leaveHistory: [
-      { type: 'Annual', startDate: '2023-05-10', endDate: '2023-05-20' },
-      { type: 'Sick', startDate: '2023-03-15', endDate: '2023-03-20' }
+      { leaveType: 'Annual', startDate: '2023-05-10', endDate: '2023-05-20' },
+      { leaveType: 'Sick', startDate: '2023-03-15', endDate: '2023-03-20' }
     ],
     performanceReviews: [
       { date: '2023-06-01', summary: 'Meets expectations' },
@@ -449,8 +449,8 @@ export const employeeList: IEmployee[] = [
     sickLeaveEntitlement: 14,
     leaveBalance: 7,
     leaveHistory: [
-      { type: 'Annual', startDate: '2023-04-20', endDate: '2023-04-30' },
-      { type: 'Sick', startDate: '2023-02-10', endDate: '2023-02-15' }
+      { leaveType: 'Annual', startDate: '2023-04-20', endDate: '2023-04-30' },
+      { leaveType: 'Sick', startDate: '2023-02-10', endDate: '2023-02-15' }
     ],
     performanceReviews: [
       { date: '2023-04-01', summary: 'Exceeds expectations' },
