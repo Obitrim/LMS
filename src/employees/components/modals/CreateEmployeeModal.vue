@@ -118,8 +118,8 @@
 </template>
 
 <script setup lang="ts">
-import cn from '@/helpers/cn';
 import AppModal from '@/components/modals/AppModal.vue';
+import cn from '@/shared/helpers/cn';
 defineEmits<{
   (e: 'close'): void;
 }>();

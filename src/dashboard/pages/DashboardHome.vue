@@ -10,7 +10,7 @@
       >
         <div>
           <Icon
-            :icon="$route.name === 'employee-list' ? 'mdi:users' : 'ph:users-light'"
+            :icon="route.name === 'employee-list' ? 'mdi:users' : 'ph:users-light'"
             :width="40"
             :class="['text-orange-800']"
           />
@@ -124,6 +124,9 @@ import type { TBarChartOption, TPieChartOption } from '@/shared/types/chart.type
 import { employeeList } from '@/employees/data/employees.data';
 import DataChart from '../components/DataChart.vue';
 import AppTable from '@/shared/components/AppTable.vue';
+import { useRoute } from 'vue-router';
+
+const route = useRoute();
 
 const pieChartOption = ref<TPieChartOption>({
   title: {

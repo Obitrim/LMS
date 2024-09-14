@@ -19,7 +19,8 @@
 </template>
 
 <script setup lang="ts">
-import cn from '@/helpers/cn.ts';
+import cn from '../helpers/cn';
+
 export type TAppModalProps = {
   show?: boolean;
   contentClass?: string;

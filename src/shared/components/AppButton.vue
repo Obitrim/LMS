@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-type TButtonVariant = 'primary';
+type TButtonVariant = 'primary' | 'base';
 type TBaseButtonProps = {
   variant?: TButtonVariant;
 };
