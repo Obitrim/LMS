@@ -16,7 +16,13 @@
       >
         <AppSidebar />
         <div class="flex-1 h-full overflow-y-auto">
-          <router-view />
+          <!-- <KeepAlive> -->
+          <RouterView v-slot="{ Component }">
+            <!-- <Transition name="fade"> -->
+            <Component :is="Component" />
+            <!-- </Transition> -->
+          </RouterView>
+          <!-- </KeepAlive> -->
         </div>
       </div>
     </main>

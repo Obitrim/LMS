@@ -16,10 +16,13 @@
             : $props.item.icon.inactive
         "
         :width="20"
+        :class="['text-gray-700']"
       />
-      <span :class="['!text-sm', $route.name === $props.item.routeName ? '' : 'text-gray-600']">{{
-        $props.item.text
-      }}</span>
+      <span
+        :style="{ fontSize: '14px' }"
+        :class="[$route.name === $props.item.routeName ? '' : 'text-gray-600']"
+        >{{ $props.item.text }}</span
+      >
     </router-link>
 
     <div :class="['']" v-if="$props.item.children && $props.item.children.length > 0">
@@ -28,7 +31,7 @@
         :key="child.routeName"
         :to="{ name: child.routeName }"
         :class="[
-          'py-1 px-2 pl-7 relative',
+          'py-2 px-2 pl-7 relative',
           'flex items-center gap-2 text-sm',
           'border-l-4 border-transparent rounded group'
         ]"

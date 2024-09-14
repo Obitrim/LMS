@@ -5,3 +5,16 @@
 .container {
   @apply max-w-7xl mx-auto px-4;
 }
+
+.fade-enter-from {
+  opacity: 1;
+}
+.fade-enter-active {
+  transition: opacity 3s ease-in-out;
+}
+.fade-leave-to {
+  opacity: 0;
+}
+.fade-leave-active {
+  transition: all 3s ease-in-out;
+}
