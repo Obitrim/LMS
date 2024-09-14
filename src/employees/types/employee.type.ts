@@ -1,8 +1,4 @@
-export interface ILeave {
-  type: string;
-  startDate: string;
-  endDate: string;
-}
+import type { ILeave } from '@/leaves/types/leave.type';
 
 export interface IPerformanceReview {
   date: string;
@@ -78,7 +74,6 @@ export interface IEmployee {
   accessLevel: string;
 }
 
-
 export interface IEmployeeHelperThis {
-    employee: IEmployee;
+  employee: IEmployee;
 }

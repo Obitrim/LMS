@@ -11,7 +11,7 @@
     >
       <Icon
         :icon="
-          $route.name === $props.item.routeName
+          route.matched.findIndex((match) => match.name === $props.item.routeName) > -1
             ? $props.item.icon.active
             : $props.item.icon.inactive
         "
@@ -20,7 +20,11 @@
       />
       <span
         :style="{ fontSize: '14px' }"
-        :class="[$route.name === $props.item.routeName ? '' : 'text-gray-600']"
+        :class="[
+          route.matched.findIndex((match) => match.name === $props.item.routeName) > -1
+            ? ''
+            : 'text-gray-600'
+        ]"
         >{{ $props.item.text }}</span
       >
     </router-link>
@@ -40,14 +44,14 @@
           :class="[
             'relative',
             'w-2 h-2 rounded-full group-hover:bg-gray-400',
-            $route.name === child.routeName
+            route.matched.findIndex((match) => match.name === child.routeName) > -1
               ? 'bg-charcoal group-hover:bg-charcoal'
               : 'bg-transparent '
           ]"
         ></div>
         <span
           :class="[
-            $route.name === child.routeName ? 'text-charcoal font-semibold' : 'text-gray-600'
+            route.name === child.routeName ? 'text-charcoal font-semibold' : 'text-gray-600'
           ]"
           >{{ child.text }}</span
         >
@@ -59,12 +63,15 @@
 <script setup lang="ts">
 import type { TNavigationItem } from '@/shared/types/navigation.type';
 import { Icon } from '@iconify/vue/dist/iconify.js';
+import { useRoute } from 'vue-router';
 
 type TSidebarItemProps = {
   item: TNavigationItem;
 };
 
 defineProps<TSidebarItemProps>();
+
+const route = useRoute();
 </script>
 
 <style scoped></style>

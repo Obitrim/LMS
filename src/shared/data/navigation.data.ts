@@ -23,7 +23,7 @@ export const DASHBOARD_SIDEBAR_ITEMS: TNavigationList = [
       active: 'bitcoin-icons:calendar-filled',
       inactive: 'bitcoin-icons:calendar-outline'
     },
-    routeName: 'leave-home',
+    routeName: 'leave-requests',
     text: 'Leaves',
     children: [
       {

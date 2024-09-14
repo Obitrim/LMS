@@ -10,7 +10,7 @@ import EmployeeList from '@/employees/pages/EmployeeList.vue';
 
 // Leave
 import LeaveList from '@/leaves/pages/LeaveList.vue';
-import LeavesHome from '@/leaves/pages/LeavesHome.vue';
+import LeaveRequestsLayout from '@/leaves/components/layout/LeaveRequestsLayout.vue';
 
 // Authentication
 import AuthView from '@/authentication/components/layout/AuthLayout.vue';
@@ -19,6 +19,7 @@ import LoginForm from '@/authentication/forms/LoginForm.vue';
 
 // Contract
 import ContractsHome from '@/contracts/pages/ContractsHome.vue';
+import LeaveCalendar from '@/leaves/pages/LeaveCalendar.vue';
 
 const routes: RouteRecordRaw[] = [
   {
@@ -67,17 +68,25 @@ const routes: RouteRecordRaw[] = [
         path: '/leaves',
         name: 'leaves',
         // component: LeaveViewsLayout,
-        redirect: { name: 'leave-home' },
+        redirect: { name: 'leave-requests' },
         children: [
-          {
-            path: '',
-            name: 'leave-home',
-            component: LeavesHome
-          },
           {
             path: 'requests',
             name: 'leave-requests',
-            component: LeaveList
+            redirect: { name: 'leave-requests-list' },
+            component: LeaveRequestsLayout,
+            children: [
+              {
+                path: 'list',
+                name: 'leave-requests-list',
+                component: LeaveList
+              },
+              {
+                path: 'calendar',
+                name: 'leave-requests-calendar',
+                component: LeaveCalendar
+              }
+            ]
           }
         ]
       },
