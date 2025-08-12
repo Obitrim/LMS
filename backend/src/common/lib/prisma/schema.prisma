@@ -11,23 +11,19 @@ generator client {
 
 generator zod {
   provider = "zod-prisma"
-  output   = "../src/common/lib/zod" // (default) the directory where generated zod schemas will be saved
+  output   = "../src/common/lib/zod"
 
   relationModel = true // (default) Create and export both plain and related models.
-  // relationModel         = "default" // Do not export model without relations.
-  // relationModel         = false // Do not generate related model
 
   modelCase = "PascalCase" // (default) Output models using pascal case (ex. UserModel, PostModel)
-  // modelCase             = "camelCase" // Output models using camel case (ex. userModel, postModel)
 
   modelSuffix = "Schema" // (default) Suffix to apply to your prisma models when naming Zod schemas
 
-  // useDecimalJs          = false // (default) represent the prisma Decimal type using as a JS number
   useDecimalJs = true // represent the prisma Decimal type using Decimal.js (as Prisma does)
 
-  // https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-by-null-values
-  prismaJsonNullability = true // (default) uses prisma's scheme for JSON field nullability
-  // prismaJsonNullability = false // allows null assignment to optional JSON fields
+  prismaJsonNullability = true
+
+  dateTimeSchema = "union"
 }
 
 datasource db {
@@ -53,10 +49,11 @@ model Organization {
 
 model Employee {
   id              String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  employee_no     String    @unique @db.VarChar(20)
   email           String    @unique @db.VarChar(100)
   first_name      String    @db.VarChar(200)
   last_name       String    @db.VarChar(200)
-  date_of_birth   DateTime  @db.Date
+  date_of_birth   DateTime  @db.Timestamp()
   position        String    @db.VarChar(200)
   organization_id String    @db.Uuid
   created_at      DateTime? @default(now()) @db.Timestamptz()
@@ -67,16 +64,35 @@ model Employee {
 }
 
 model Contract {
-  id              String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  start_date      DateTime  @db.Date
-  end_date        DateTime? @db.Date
-  employee_id     String    @db.Uuid
-  organization_id String    @db.Uuid
-  created_at      DateTime? @default(now()) @db.Timestamptz()
-  updated_at      DateTime? @updatedAt @db.Timestamptz()
+  id              String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  start_date      DateTime       @db.Timestamp()
+  end_date        DateTime?      @db.Timestamp()
+  contract_type   ContractType
+  position        String
+  amount          Decimal        @db.Decimal(10, 2)
+  file_url        String?        @db.Text
+  employee_id     String         @db.Uuid
+  organization_id String         @db.Uuid
+  status          ContractStatus @default(PENDING_SIGNATURE)
+  created_at      DateTime?      @default(now()) @db.Timestamptz()
+  updated_at      DateTime?      @updatedAt @db.Timestamptz()
 
   employee     Employee     @relation(fields: [employee_id], references: [id], onDelete: SetDefault)
   organization Organization @relation(fields: [organization_id], references: [id])
+}
+
+enum ContractType {
+  PERMANENT
+  FIXED_TERM
+  TEMPORARY
+  INTERNSHIP
+}
+
+enum ContractStatus {
+  ACTIVE
+  TERMINATED
+  EXPIRED
+  PENDING_SIGNATURE
 }
 
 model User {

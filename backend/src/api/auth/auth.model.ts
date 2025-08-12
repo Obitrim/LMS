@@ -1,5 +1,5 @@
 import { OrganizationSchema } from "@/common/lib/zod";
-import z from "zod";
+import { z } from "@/common/utils/zod.util";
 
 export const LoginSchema = z.object({
   body: z.object({
@@ -55,8 +55,12 @@ export const OnboardRequestSchema = z.object({
     country: true,
     city: true,
     zip: true,
+  }).extend({
+    organization_id: z.string().uuid(),
   }),
 });
+
+export type OnboardRequestDto = z.infer<typeof OnboardRequestSchema>["body"];
 
 export const OnboardRequestHeaderSchema = z.object({
   Authorization: z.coerce.string().refine((val) => {

@@ -4,5 +4,5 @@ export const RefreshTokenSchema = z.object({
   id: z.string(),
   user_id: z.string(),
   token: z.string(),
-  expires_at: z.date(),
+  expires_at: z.string().datetime(),
 })

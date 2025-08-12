@@ -21,7 +21,9 @@ const envSchema = z.object({
   COMMON_RATE_LIMIT_WINDOW_MS: z.coerce.number().int().positive().default(1000),
 
   DATABASE_URL: z.coerce.string(),
+
   JWT_SECRET: z.coerce.string(),
+
   JWT_REFRESH_SECRET: z.coerce.string(),
 });
 

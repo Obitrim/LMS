@@ -1,6 +1,6 @@
-import * as z from "zod";
-import { Role } from "../prisma";
-import { CompleteOrganization, RelatedOrganizationSchema } from "./index";
+import * as z from "zod"
+import { Role } from "../prisma"
+import { CompleteOrganization, RelatedOrganizationSchema } from "./index"
 
 export const UserSchema = z.object({
   id: z.string(),
@@ -9,12 +9,12 @@ export const UserSchema = z.object({
   password: z.string(),
   role: z.nativeEnum(Role),
   organization_id: z.string(),
-  created_at: z.date().nullish(),
-  updated_at: z.date().nullish(),
-});
+  created_at: z.string().datetime().nullish(),
+  updated_at: z.string().datetime().nullish(),
+})
 
 export interface CompleteUser extends z.infer<typeof UserSchema> {
-  organization: CompleteOrganization;
+  organization: CompleteOrganization
 }
 
 /**
@@ -22,8 +22,6 @@ export interface CompleteUser extends z.infer<typeof UserSchema> {
  *
  * NOTE: Lazy required in case of potential circular dependencies within schema
  */
-export const RelatedUserSchema: z.ZodSchema<CompleteUser> = z.lazy(() =>
-  UserSchema.extend({
-    organization: RelatedOrganizationSchema,
-  })
-);
+export const RelatedUserSchema: z.ZodSchema<CompleteUser> = z.lazy(() => UserSchema.extend({
+  organization: RelatedOrganizationSchema,
+}))

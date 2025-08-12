@@ -134,6 +134,7 @@ exports.Prisma.OrganizationScalarFieldEnum = {
 
 exports.Prisma.EmployeeScalarFieldEnum = {
   id: 'id',
+  employee_no: 'employee_no',
   email: 'email',
   first_name: 'first_name',
   last_name: 'last_name',
@@ -148,8 +149,13 @@ exports.Prisma.ContractScalarFieldEnum = {
   id: 'id',
   start_date: 'start_date',
   end_date: 'end_date',
+  contract_type: 'contract_type',
+  position: 'position',
+  amount: 'amount',
+  file_url: 'file_url',
   employee_id: 'employee_id',
   organization_id: 'organization_id',
+  status: 'status',
   created_at: 'created_at',
   updated_at: 'updated_at'
 };
@@ -190,6 +196,20 @@ exports.OnboardingStatus = exports.$Enums.OnboardingStatus = {
   BASIC: 'BASIC',
   LOCATION: 'LOCATION',
   COMPLETE: 'COMPLETE'
+};
+
+exports.ContractType = exports.$Enums.ContractType = {
+  PERMANENT: 'PERMANENT',
+  FIXED_TERM: 'FIXED_TERM',
+  TEMPORARY: 'TEMPORARY',
+  INTERNSHIP: 'INTERNSHIP'
+};
+
+exports.ContractStatus = exports.$Enums.ContractStatus = {
+  ACTIVE: 'ACTIVE',
+  TERMINATED: 'TERMINATED',
+  EXPIRED: 'EXPIRED',
+  PENDING_SIGNATURE: 'PENDING_SIGNATURE'
 };
 
 exports.Role = exports.$Enums.Role = {

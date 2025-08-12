@@ -7,6 +7,7 @@ import {
   AuthResponse,
   JWTData,
   LoginDto,
+  OnboardRequestDto,
   RefreshTokenDto,
   SignupDto,
 } from "./auth.model";
@@ -21,7 +22,14 @@ export class AuthService {
   private readonly JWT_EXPIRES_IN = "1h";
   private readonly JWT_REFRESH_EXPIRES_IN = "7d";
 
-  // Generate JWT token
+  /**
+   * Generates a JSON Web Token (JWT) for authentication.
+   * 
+   * @param {Object} payload - The payload to be signed into the token.
+   * @param {string} payload.user_id - The user's ID.
+   * @param {string} payload.organization_id - The organization's ID.
+   * @returns {string} The generated JWT token.
+   */
   private generateToken(payload: {
     user_id: string;
     organization_id: string;
@@ -31,7 +39,14 @@ export class AuthService {
     });
   }
 
-  // Generate refresh token
+  /**
+   * Generates a refresh token for token refresh purposes.
+   * 
+   * @param {Object} payload - The payload to be signed into the token.
+   * @param {string} payload.user_id - The user's ID.
+   * @param {string} payload.organization_id - The organization's ID.
+   * @returns {string} The generated refresh token.
+   */
   private generateRefreshToken(payload: {
     user_id: string;
     organization_id: string;
@@ -41,12 +56,23 @@ export class AuthService {
     });
   }
 
-  // Hash password
+  /**
+   * Hashes a password using argon2.
+   * 
+   * @param {string} password - The password to be hashed.
+   * @returns {Promise<string>} A promise that resolves to the hashed password.
+   */
   private async hashPassword(password: string): Promise<string> {
     return await argon2.hash(password);
   }
 
-  // Compare password
+  /**
+   * Compares a plain password with a hashed password using argon2.
+   * 
+   * @param {string} password - The plain password to compare.
+   * @param {string} hashedPassword - The hashed password to compare with.
+   * @returns {Promise<boolean>} A promise that resolves to a boolean indicating if the passwords match.
+   */
   private async comparePassword(
     password: string,
     hashedPassword: string
@@ -54,11 +80,37 @@ export class AuthService {
     return await argon2.verify(hashedPassword, password);
   }
 
-  async onboard(body: any) {
-    return ServiceResponse.failure("error", {});
+  /**
+   * Handles the onboarding process for an organization.
+   * 
+   * @param {OnboardRequestDto} body - The request body containing organization details.
+   * @returns {Promise<ServiceResponse>} A promise that resolves to a ServiceResponse object.
+   */
+  async onboard(body: OnboardRequestDto) {
+    try {
+      const updatedOrganization = await db.organization.update({
+        where: { id: body.organization_id },
+        data: {
+          country: body.country,
+          city: body.city,
+          zip: body.zip,
+        },
+      });
+      return ServiceResponse.success(
+        "Organization updated successfully",
+        updatedOrganization
+      );
+    } catch (error) {
+      return ServiceResponse.failure("Failed to update organization", error);
+    }
   }
 
-  // User signup
+  /**
+   * Handles the signup process for a new user.
+   * 
+   * @param {SignupDto} signupData - The signup data including user and organization details.
+   * @returns {Promise<ServiceResponse<AuthResponse | null>>} A promise that resolves to a ServiceResponse object containing the authentication response or null.
+   */
   async signup(
     signupData: SignupDto
   ): Promise<ServiceResponse<AuthResponse | null>> {
@@ -156,7 +208,12 @@ export class AuthService {
     }
   }
 
-  //   // User login
+  /**
+   * Handles the login process for an existing user.
+   * 
+   * @param {LoginDto} loginData - The login data including email and password.
+   * @returns {Promise<ServiceResponse<AuthResponse | null>>} A promise that resolves to a ServiceResponse object containing the authentication response or null.
+   */
   async login(
     loginData: LoginDto
   ): Promise<ServiceResponse<AuthResponse | null>> {
@@ -231,7 +288,12 @@ export class AuthService {
     }
   }
 
-  // Refresh token
+  /**
+   * Handles the refresh token process.
+   * 
+   * @param {RefreshTokenDto} refreshTokenData - The refresh token data.
+   * @returns {Promise<ServiceResponse<{ token: string } | null>>} A promise that resolves to a ServiceResponse object containing the new token or null.
+   */
   async refreshToken(
     refreshTokenData: RefreshTokenDto
   ): Promise<ServiceResponse<{ token: string } | null>> {
@@ -283,7 +345,12 @@ export class AuthService {
     }
   }
 
-  // Logout
+  /**
+   * Handles the logout process by deleting the refresh token.
+   * 
+   * @param {RefreshTokenDto} refreshTokenData - The refresh token data.
+   * @returns {Promise<ServiceResponse<null>>} A promise that resolves to a ServiceResponse object indicating logout success or failure.
+   */
   async logout(
     refreshTokenData: RefreshTokenDto
   ): Promise<ServiceResponse<null>> {
@@ -308,7 +375,12 @@ export class AuthService {
     }
   }
 
-  // Verify token middleware helper
+  /**
+   * Verifies a token and returns the user ID and email if valid.
+   * 
+   * @param {string} token - The token to verify.
+   * @returns {{ userId: string; email: string } | null} The user ID and email if the token is valid, otherwise null.
+   */
   verifyToken(token: string): { userId: string; email: string } | null {
     try {
       return jwt.verify(token, this.JWT_SECRET) as {

@@ -10,8 +10,8 @@ export const OrganizationSchema = z.object({
   city: z.string().nullish(),
   zip: z.string().nullish(),
   status: z.nativeEnum(OnboardingStatus),
-  created_at: z.date().nullish(),
-  updated_at: z.date().nullish(),
+  created_at: z.string().datetime().nullish(),
+  updated_at: z.string().datetime().nullish(),
 })
 
 export interface CompleteOrganization extends z.infer<typeof OrganizationSchema> {

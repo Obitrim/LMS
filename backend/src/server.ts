@@ -7,6 +7,7 @@ import errorHandler from "@/common/middleware/errorHandler";
 import requestLogger from "@/common/middleware/requestLogger";
 import { env } from "@/common/utils/envConfig";
 import { authRouter } from "./api/auth/auth.router";
+import { employeeRouter } from "./api/employee/employee.router";
 
 const logger = pino({ name: "server start" });
 const app: Express = express();
@@ -28,6 +29,7 @@ app.use(requestLogger);
 // app.use("/health-check", healthCheckRouter);
 // app.use("/users", userRouter);
 app.use("/api/auth", authRouter);
+app.use("/api/employees", employeeRouter);
 
 // Swagger UI
 app.use(openAPIRouter);

@@ -43,7 +43,27 @@ export type RefreshToken = $Result.DefaultSelection<Prisma.$RefreshTokenPayload>
  * Enums
  */
 export namespace $Enums {
-  export const Role: {
+  export const ContractType: {
+  PERMANENT: 'PERMANENT',
+  FIXED_TERM: 'FIXED_TERM',
+  TEMPORARY: 'TEMPORARY',
+  INTERNSHIP: 'INTERNSHIP'
+};
+
+export type ContractType = (typeof ContractType)[keyof typeof ContractType]
+
+
+export const ContractStatus: {
+  ACTIVE: 'ACTIVE',
+  TERMINATED: 'TERMINATED',
+  EXPIRED: 'EXPIRED',
+  PENDING_SIGNATURE: 'PENDING_SIGNATURE'
+};
+
+export type ContractStatus = (typeof ContractStatus)[keyof typeof ContractStatus]
+
+
+export const Role: {
   ADMIN: 'ADMIN',
   EMPLOYEE: 'EMPLOYEE'
 };
@@ -60,6 +80,14 @@ export const OnboardingStatus: {
 export type OnboardingStatus = (typeof OnboardingStatus)[keyof typeof OnboardingStatus]
 
 }
+
+export type ContractType = $Enums.ContractType
+
+export const ContractType: typeof $Enums.ContractType
+
+export type ContractStatus = $Enums.ContractStatus
+
+export const ContractStatus: typeof $Enums.ContractStatus
 
 export type Role = $Enums.Role
 
@@ -2545,6 +2573,7 @@ export namespace Prisma {
 
   export type EmployeeMinAggregateOutputType = {
     id: string | null
+    employee_no: string | null
     email: string | null
     first_name: string | null
     last_name: string | null
@@ -2557,6 +2586,7 @@ export namespace Prisma {
 
   export type EmployeeMaxAggregateOutputType = {
     id: string | null
+    employee_no: string | null
     email: string | null
     first_name: string | null
     last_name: string | null
@@ -2569,6 +2599,7 @@ export namespace Prisma {
 
   export type EmployeeCountAggregateOutputType = {
     id: number
+    employee_no: number
     email: number
     first_name: number
     last_name: number
@@ -2583,6 +2614,7 @@ export namespace Prisma {
 
   export type EmployeeMinAggregateInputType = {
     id?: true
+    employee_no?: true
     email?: true
     first_name?: true
     last_name?: true
@@ -2595,6 +2627,7 @@ export namespace Prisma {
 
   export type EmployeeMaxAggregateInputType = {
     id?: true
+    employee_no?: true
     email?: true
     first_name?: true
     last_name?: true
@@ -2607,6 +2640,7 @@ export namespace Prisma {
 
   export type EmployeeCountAggregateInputType = {
     id?: true
+    employee_no?: true
     email?: true
     first_name?: true
     last_name?: true
@@ -2692,6 +2726,7 @@ export namespace Prisma {
 
   export type EmployeeGroupByOutputType = {
     id: string
+    employee_no: string
     email: string
     first_name: string
     last_name: string
@@ -2721,6 +2756,7 @@ export namespace Prisma {
 
   export type EmployeeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    employee_no?: boolean
     email?: boolean
     first_name?: boolean
     last_name?: boolean
@@ -2736,6 +2772,7 @@ export namespace Prisma {
 
   export type EmployeeSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    employee_no?: boolean
     email?: boolean
     first_name?: boolean
     last_name?: boolean
@@ -2749,6 +2786,7 @@ export namespace Prisma {
 
   export type EmployeeSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    employee_no?: boolean
     email?: boolean
     first_name?: boolean
     last_name?: boolean
@@ -2762,6 +2800,7 @@ export namespace Prisma {
 
   export type EmployeeSelectScalar = {
     id?: boolean
+    employee_no?: boolean
     email?: boolean
     first_name?: boolean
     last_name?: boolean
@@ -2772,7 +2811,7 @@ export namespace Prisma {
     updated_at?: boolean
   }
 
-  export type EmployeeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "first_name" | "last_name" | "date_of_birth" | "position" | "organization_id" | "created_at" | "updated_at", ExtArgs["result"]["employee"]>
+  export type EmployeeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "employee_no" | "email" | "first_name" | "last_name" | "date_of_birth" | "position" | "organization_id" | "created_at" | "updated_at", ExtArgs["result"]["employee"]>
   export type EmployeeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     organization?: boolean | OrganizationDefaultArgs<ExtArgs>
     contracts?: boolean | Employee$contractsArgs<ExtArgs>
@@ -2793,6 +2832,7 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
+      employee_no: string
       email: string
       first_name: string
       last_name: string
@@ -3227,6 +3267,7 @@ export namespace Prisma {
    */
   interface EmployeeFieldRefs {
     readonly id: FieldRef<"Employee", 'String'>
+    readonly employee_no: FieldRef<"Employee", 'String'>
     readonly email: FieldRef<"Employee", 'String'>
     readonly first_name: FieldRef<"Employee", 'String'>
     readonly last_name: FieldRef<"Employee", 'String'>
@@ -3679,16 +3720,31 @@ export namespace Prisma {
 
   export type AggregateContract = {
     _count: ContractCountAggregateOutputType | null
+    _avg: ContractAvgAggregateOutputType | null
+    _sum: ContractSumAggregateOutputType | null
     _min: ContractMinAggregateOutputType | null
     _max: ContractMaxAggregateOutputType | null
+  }
+
+  export type ContractAvgAggregateOutputType = {
+    amount: Decimal | null
+  }
+
+  export type ContractSumAggregateOutputType = {
+    amount: Decimal | null
   }
 
   export type ContractMinAggregateOutputType = {
     id: string | null
     start_date: Date | null
     end_date: Date | null
+    contract_type: $Enums.ContractType | null
+    position: string | null
+    amount: Decimal | null
+    file_url: string | null
     employee_id: string | null
     organization_id: string | null
+    status: $Enums.ContractStatus | null
     created_at: Date | null
     updated_at: Date | null
   }
@@ -3697,8 +3753,13 @@ export namespace Prisma {
     id: string | null
     start_date: Date | null
     end_date: Date | null
+    contract_type: $Enums.ContractType | null
+    position: string | null
+    amount: Decimal | null
+    file_url: string | null
     employee_id: string | null
     organization_id: string | null
+    status: $Enums.ContractStatus | null
     created_at: Date | null
     updated_at: Date | null
   }
@@ -3707,20 +3768,38 @@ export namespace Prisma {
     id: number
     start_date: number
     end_date: number
+    contract_type: number
+    position: number
+    amount: number
+    file_url: number
     employee_id: number
     organization_id: number
+    status: number
     created_at: number
     updated_at: number
     _all: number
   }
 
 
+  export type ContractAvgAggregateInputType = {
+    amount?: true
+  }
+
+  export type ContractSumAggregateInputType = {
+    amount?: true
+  }
+
   export type ContractMinAggregateInputType = {
     id?: true
     start_date?: true
     end_date?: true
+    contract_type?: true
+    position?: true
+    amount?: true
+    file_url?: true
     employee_id?: true
     organization_id?: true
+    status?: true
     created_at?: true
     updated_at?: true
   }
@@ -3729,8 +3808,13 @@ export namespace Prisma {
     id?: true
     start_date?: true
     end_date?: true
+    contract_type?: true
+    position?: true
+    amount?: true
+    file_url?: true
     employee_id?: true
     organization_id?: true
+    status?: true
     created_at?: true
     updated_at?: true
   }
@@ -3739,8 +3823,13 @@ export namespace Prisma {
     id?: true
     start_date?: true
     end_date?: true
+    contract_type?: true
+    position?: true
+    amount?: true
+    file_url?: true
     employee_id?: true
     organization_id?: true
+    status?: true
     created_at?: true
     updated_at?: true
     _all?: true
@@ -3784,6 +3873,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: ContractAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ContractSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: ContractMinAggregateInputType
@@ -3814,6 +3915,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: ContractCountAggregateInputType | true
+    _avg?: ContractAvgAggregateInputType
+    _sum?: ContractSumAggregateInputType
     _min?: ContractMinAggregateInputType
     _max?: ContractMaxAggregateInputType
   }
@@ -3822,11 +3925,18 @@ export namespace Prisma {
     id: string
     start_date: Date
     end_date: Date | null
+    contract_type: $Enums.ContractType
+    position: string
+    amount: Decimal
+    file_url: string | null
     employee_id: string
     organization_id: string
+    status: $Enums.ContractStatus
     created_at: Date | null
     updated_at: Date | null
     _count: ContractCountAggregateOutputType | null
+    _avg: ContractAvgAggregateOutputType | null
+    _sum: ContractSumAggregateOutputType | null
     _min: ContractMinAggregateOutputType | null
     _max: ContractMaxAggregateOutputType | null
   }
@@ -3849,8 +3959,13 @@ export namespace Prisma {
     id?: boolean
     start_date?: boolean
     end_date?: boolean
+    contract_type?: boolean
+    position?: boolean
+    amount?: boolean
+    file_url?: boolean
     employee_id?: boolean
     organization_id?: boolean
+    status?: boolean
     created_at?: boolean
     updated_at?: boolean
     employee?: boolean | EmployeeDefaultArgs<ExtArgs>
@@ -3861,8 +3976,13 @@ export namespace Prisma {
     id?: boolean
     start_date?: boolean
     end_date?: boolean
+    contract_type?: boolean
+    position?: boolean
+    amount?: boolean
+    file_url?: boolean
     employee_id?: boolean
     organization_id?: boolean
+    status?: boolean
     created_at?: boolean
     updated_at?: boolean
     employee?: boolean | EmployeeDefaultArgs<ExtArgs>
@@ -3873,8 +3993,13 @@ export namespace Prisma {
     id?: boolean
     start_date?: boolean
     end_date?: boolean
+    contract_type?: boolean
+    position?: boolean
+    amount?: boolean
+    file_url?: boolean
     employee_id?: boolean
     organization_id?: boolean
+    status?: boolean
     created_at?: boolean
     updated_at?: boolean
     employee?: boolean | EmployeeDefaultArgs<ExtArgs>
@@ -3885,13 +4010,18 @@ export namespace Prisma {
     id?: boolean
     start_date?: boolean
     end_date?: boolean
+    contract_type?: boolean
+    position?: boolean
+    amount?: boolean
+    file_url?: boolean
     employee_id?: boolean
     organization_id?: boolean
+    status?: boolean
     created_at?: boolean
     updated_at?: boolean
   }
 
-  export type ContractOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "start_date" | "end_date" | "employee_id" | "organization_id" | "created_at" | "updated_at", ExtArgs["result"]["contract"]>
+  export type ContractOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "start_date" | "end_date" | "contract_type" | "position" | "amount" | "file_url" | "employee_id" | "organization_id" | "status" | "created_at" | "updated_at", ExtArgs["result"]["contract"]>
   export type ContractInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     employee?: boolean | EmployeeDefaultArgs<ExtArgs>
     organization?: boolean | OrganizationDefaultArgs<ExtArgs>
@@ -3915,8 +4045,13 @@ export namespace Prisma {
       id: string
       start_date: Date
       end_date: Date | null
+      contract_type: $Enums.ContractType
+      position: string
+      amount: Prisma.Decimal
+      file_url: string | null
       employee_id: string
       organization_id: string
+      status: $Enums.ContractStatus
       created_at: Date | null
       updated_at: Date | null
     }, ExtArgs["result"]["contract"]>
@@ -4347,8 +4482,13 @@ export namespace Prisma {
     readonly id: FieldRef<"Contract", 'String'>
     readonly start_date: FieldRef<"Contract", 'DateTime'>
     readonly end_date: FieldRef<"Contract", 'DateTime'>
+    readonly contract_type: FieldRef<"Contract", 'ContractType'>
+    readonly position: FieldRef<"Contract", 'String'>
+    readonly amount: FieldRef<"Contract", 'Decimal'>
+    readonly file_url: FieldRef<"Contract", 'String'>
     readonly employee_id: FieldRef<"Contract", 'String'>
     readonly organization_id: FieldRef<"Contract", 'String'>
+    readonly status: FieldRef<"Contract", 'ContractStatus'>
     readonly created_at: FieldRef<"Contract", 'DateTime'>
     readonly updated_at: FieldRef<"Contract", 'DateTime'>
   }
@@ -6875,6 +7015,7 @@ export namespace Prisma {
 
   export const EmployeeScalarFieldEnum: {
     id: 'id',
+    employee_no: 'employee_no',
     email: 'email',
     first_name: 'first_name',
     last_name: 'last_name',
@@ -6892,8 +7033,13 @@ export namespace Prisma {
     id: 'id',
     start_date: 'start_date',
     end_date: 'end_date',
+    contract_type: 'contract_type',
+    position: 'position',
+    amount: 'amount',
+    file_url: 'file_url',
     employee_id: 'employee_id',
     organization_id: 'organization_id',
+    status: 'status',
     created_at: 'created_at',
     updated_at: 'updated_at'
   };
@@ -6993,6 +7139,48 @@ export namespace Prisma {
    * Reference to a field of type 'DateTime[]'
    */
   export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'ContractType'
+   */
+  export type EnumContractTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ContractType'>
+    
+
+
+  /**
+   * Reference to a field of type 'ContractType[]'
+   */
+  export type ListEnumContractTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ContractType[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Decimal'
+   */
+  export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
+    
+
+
+  /**
+   * Reference to a field of type 'Decimal[]'
+   */
+  export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'ContractStatus'
+   */
+  export type EnumContractStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ContractStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'ContractStatus[]'
+   */
+  export type ListEnumContractStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ContractStatus[]'>
     
 
 
@@ -7113,6 +7301,7 @@ export namespace Prisma {
     OR?: EmployeeWhereInput[]
     NOT?: EmployeeWhereInput | EmployeeWhereInput[]
     id?: UuidFilter<"Employee"> | string
+    employee_no?: StringFilter<"Employee"> | string
     email?: StringFilter<"Employee"> | string
     first_name?: StringFilter<"Employee"> | string
     last_name?: StringFilter<"Employee"> | string
@@ -7127,6 +7316,7 @@ export namespace Prisma {
 
   export type EmployeeOrderByWithRelationInput = {
     id?: SortOrder
+    employee_no?: SortOrder
     email?: SortOrder
     first_name?: SortOrder
     last_name?: SortOrder
@@ -7141,6 +7331,7 @@ export namespace Prisma {
 
   export type EmployeeWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    employee_no?: string
     email?: string
     AND?: EmployeeWhereInput | EmployeeWhereInput[]
     OR?: EmployeeWhereInput[]
@@ -7154,10 +7345,11 @@ export namespace Prisma {
     updated_at?: DateTimeNullableFilter<"Employee"> | Date | string | null
     organization?: XOR<OrganizationScalarRelationFilter, OrganizationWhereInput>
     contracts?: ContractListRelationFilter
-  }, "id" | "email">
+  }, "id" | "employee_no" | "email">
 
   export type EmployeeOrderByWithAggregationInput = {
     id?: SortOrder
+    employee_no?: SortOrder
     email?: SortOrder
     first_name?: SortOrder
     last_name?: SortOrder
@@ -7176,6 +7368,7 @@ export namespace Prisma {
     OR?: EmployeeScalarWhereWithAggregatesInput[]
     NOT?: EmployeeScalarWhereWithAggregatesInput | EmployeeScalarWhereWithAggregatesInput[]
     id?: UuidWithAggregatesFilter<"Employee"> | string
+    employee_no?: StringWithAggregatesFilter<"Employee"> | string
     email?: StringWithAggregatesFilter<"Employee"> | string
     first_name?: StringWithAggregatesFilter<"Employee"> | string
     last_name?: StringWithAggregatesFilter<"Employee"> | string
@@ -7193,8 +7386,13 @@ export namespace Prisma {
     id?: UuidFilter<"Contract"> | string
     start_date?: DateTimeFilter<"Contract"> | Date | string
     end_date?: DateTimeNullableFilter<"Contract"> | Date | string | null
+    contract_type?: EnumContractTypeFilter<"Contract"> | $Enums.ContractType
+    position?: StringFilter<"Contract"> | string
+    amount?: DecimalFilter<"Contract"> | Decimal | DecimalJsLike | number | string
+    file_url?: StringNullableFilter<"Contract"> | string | null
     employee_id?: UuidFilter<"Contract"> | string
     organization_id?: UuidFilter<"Contract"> | string
+    status?: EnumContractStatusFilter<"Contract"> | $Enums.ContractStatus
     created_at?: DateTimeNullableFilter<"Contract"> | Date | string | null
     updated_at?: DateTimeNullableFilter<"Contract"> | Date | string | null
     employee?: XOR<EmployeeScalarRelationFilter, EmployeeWhereInput>
@@ -7205,8 +7403,13 @@ export namespace Prisma {
     id?: SortOrder
     start_date?: SortOrder
     end_date?: SortOrderInput | SortOrder
+    contract_type?: SortOrder
+    position?: SortOrder
+    amount?: SortOrder
+    file_url?: SortOrderInput | SortOrder
     employee_id?: SortOrder
     organization_id?: SortOrder
+    status?: SortOrder
     created_at?: SortOrderInput | SortOrder
     updated_at?: SortOrderInput | SortOrder
     employee?: EmployeeOrderByWithRelationInput
@@ -7220,8 +7423,13 @@ export namespace Prisma {
     NOT?: ContractWhereInput | ContractWhereInput[]
     start_date?: DateTimeFilter<"Contract"> | Date | string
     end_date?: DateTimeNullableFilter<"Contract"> | Date | string | null
+    contract_type?: EnumContractTypeFilter<"Contract"> | $Enums.ContractType
+    position?: StringFilter<"Contract"> | string
+    amount?: DecimalFilter<"Contract"> | Decimal | DecimalJsLike | number | string
+    file_url?: StringNullableFilter<"Contract"> | string | null
     employee_id?: UuidFilter<"Contract"> | string
     organization_id?: UuidFilter<"Contract"> | string
+    status?: EnumContractStatusFilter<"Contract"> | $Enums.ContractStatus
     created_at?: DateTimeNullableFilter<"Contract"> | Date | string | null
     updated_at?: DateTimeNullableFilter<"Contract"> | Date | string | null
     employee?: XOR<EmployeeScalarRelationFilter, EmployeeWhereInput>
@@ -7232,13 +7440,20 @@ export namespace Prisma {
     id?: SortOrder
     start_date?: SortOrder
     end_date?: SortOrderInput | SortOrder
+    contract_type?: SortOrder
+    position?: SortOrder
+    amount?: SortOrder
+    file_url?: SortOrderInput | SortOrder
     employee_id?: SortOrder
     organization_id?: SortOrder
+    status?: SortOrder
     created_at?: SortOrderInput | SortOrder
     updated_at?: SortOrderInput | SortOrder
     _count?: ContractCountOrderByAggregateInput
+    _avg?: ContractAvgOrderByAggregateInput
     _max?: ContractMaxOrderByAggregateInput
     _min?: ContractMinOrderByAggregateInput
+    _sum?: ContractSumOrderByAggregateInput
   }
 
   export type ContractScalarWhereWithAggregatesInput = {
@@ -7248,8 +7463,13 @@ export namespace Prisma {
     id?: UuidWithAggregatesFilter<"Contract"> | string
     start_date?: DateTimeWithAggregatesFilter<"Contract"> | Date | string
     end_date?: DateTimeNullableWithAggregatesFilter<"Contract"> | Date | string | null
+    contract_type?: EnumContractTypeWithAggregatesFilter<"Contract"> | $Enums.ContractType
+    position?: StringWithAggregatesFilter<"Contract"> | string
+    amount?: DecimalWithAggregatesFilter<"Contract"> | Decimal | DecimalJsLike | number | string
+    file_url?: StringNullableWithAggregatesFilter<"Contract"> | string | null
     employee_id?: UuidWithAggregatesFilter<"Contract"> | string
     organization_id?: UuidWithAggregatesFilter<"Contract"> | string
+    status?: EnumContractStatusWithAggregatesFilter<"Contract"> | $Enums.ContractStatus
     created_at?: DateTimeNullableWithAggregatesFilter<"Contract"> | Date | string | null
     updated_at?: DateTimeNullableWithAggregatesFilter<"Contract"> | Date | string | null
   }
@@ -7469,6 +7689,7 @@ export namespace Prisma {
 
   export type EmployeeCreateInput = {
     id?: string
+    employee_no: string
     email: string
     first_name: string
     last_name: string
@@ -7482,6 +7703,7 @@ export namespace Prisma {
 
   export type EmployeeUncheckedCreateInput = {
     id?: string
+    employee_no: string
     email: string
     first_name: string
     last_name: string
@@ -7495,6 +7717,7 @@ export namespace Prisma {
 
   export type EmployeeUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    employee_no?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
@@ -7508,6 +7731,7 @@ export namespace Prisma {
 
   export type EmployeeUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    employee_no?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
@@ -7521,6 +7745,7 @@ export namespace Prisma {
 
   export type EmployeeCreateManyInput = {
     id?: string
+    employee_no: string
     email: string
     first_name: string
     last_name: string
@@ -7533,6 +7758,7 @@ export namespace Prisma {
 
   export type EmployeeUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    employee_no?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
@@ -7544,6 +7770,7 @@ export namespace Prisma {
 
   export type EmployeeUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
+    employee_no?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
@@ -7558,6 +7785,11 @@ export namespace Prisma {
     id?: string
     start_date: Date | string
     end_date?: Date | string | null
+    contract_type: $Enums.ContractType
+    position: string
+    amount: Decimal | DecimalJsLike | number | string
+    file_url?: string | null
+    status?: $Enums.ContractStatus
     created_at?: Date | string | null
     updated_at?: Date | string | null
     employee: EmployeeCreateNestedOneWithoutContractsInput
@@ -7568,8 +7800,13 @@ export namespace Prisma {
     id?: string
     start_date: Date | string
     end_date?: Date | string | null
+    contract_type: $Enums.ContractType
+    position: string
+    amount: Decimal | DecimalJsLike | number | string
+    file_url?: string | null
     employee_id: string
     organization_id: string
+    status?: $Enums.ContractStatus
     created_at?: Date | string | null
     updated_at?: Date | string | null
   }
@@ -7578,6 +7815,11 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     start_date?: DateTimeFieldUpdateOperationsInput | Date | string
     end_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    contract_type?: EnumContractTypeFieldUpdateOperationsInput | $Enums.ContractType
+    position?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    file_url?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumContractStatusFieldUpdateOperationsInput | $Enums.ContractStatus
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     employee?: EmployeeUpdateOneRequiredWithoutContractsNestedInput
@@ -7588,8 +7830,13 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     start_date?: DateTimeFieldUpdateOperationsInput | Date | string
     end_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    contract_type?: EnumContractTypeFieldUpdateOperationsInput | $Enums.ContractType
+    position?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    file_url?: NullableStringFieldUpdateOperationsInput | string | null
     employee_id?: StringFieldUpdateOperationsInput | string
     organization_id?: StringFieldUpdateOperationsInput | string
+    status?: EnumContractStatusFieldUpdateOperationsInput | $Enums.ContractStatus
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -7598,8 +7845,13 @@ export namespace Prisma {
     id?: string
     start_date: Date | string
     end_date?: Date | string | null
+    contract_type: $Enums.ContractType
+    position: string
+    amount: Decimal | DecimalJsLike | number | string
+    file_url?: string | null
     employee_id: string
     organization_id: string
+    status?: $Enums.ContractStatus
     created_at?: Date | string | null
     updated_at?: Date | string | null
   }
@@ -7608,6 +7860,11 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     start_date?: DateTimeFieldUpdateOperationsInput | Date | string
     end_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    contract_type?: EnumContractTypeFieldUpdateOperationsInput | $Enums.ContractType
+    position?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    file_url?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumContractStatusFieldUpdateOperationsInput | $Enums.ContractStatus
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -7616,8 +7873,13 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     start_date?: DateTimeFieldUpdateOperationsInput | Date | string
     end_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    contract_type?: EnumContractTypeFieldUpdateOperationsInput | $Enums.ContractType
+    position?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    file_url?: NullableStringFieldUpdateOperationsInput | string | null
     employee_id?: StringFieldUpdateOperationsInput | string
     organization_id?: StringFieldUpdateOperationsInput | string
+    status?: EnumContractStatusFieldUpdateOperationsInput | $Enums.ContractStatus
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -7971,6 +8233,7 @@ export namespace Prisma {
 
   export type EmployeeCountOrderByAggregateInput = {
     id?: SortOrder
+    employee_no?: SortOrder
     email?: SortOrder
     first_name?: SortOrder
     last_name?: SortOrder
@@ -7983,6 +8246,7 @@ export namespace Prisma {
 
   export type EmployeeMaxOrderByAggregateInput = {
     id?: SortOrder
+    employee_no?: SortOrder
     email?: SortOrder
     first_name?: SortOrder
     last_name?: SortOrder
@@ -7995,6 +8259,7 @@ export namespace Prisma {
 
   export type EmployeeMinOrderByAggregateInput = {
     id?: SortOrder
+    employee_no?: SortOrder
     email?: SortOrder
     first_name?: SortOrder
     last_name?: SortOrder
@@ -8019,6 +8284,31 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type EnumContractTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.ContractType | EnumContractTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ContractType[] | ListEnumContractTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ContractType[] | ListEnumContractTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumContractTypeFilter<$PrismaModel> | $Enums.ContractType
+  }
+
+  export type DecimalFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
+  }
+
+  export type EnumContractStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.ContractStatus | EnumContractStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ContractStatus[] | ListEnumContractStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ContractStatus[] | ListEnumContractStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumContractStatusFilter<$PrismaModel> | $Enums.ContractStatus
+  }
+
   export type EmployeeScalarRelationFilter = {
     is?: EmployeeWhereInput
     isNot?: EmployeeWhereInput
@@ -8028,18 +8318,32 @@ export namespace Prisma {
     id?: SortOrder
     start_date?: SortOrder
     end_date?: SortOrder
+    contract_type?: SortOrder
+    position?: SortOrder
+    amount?: SortOrder
+    file_url?: SortOrder
     employee_id?: SortOrder
     organization_id?: SortOrder
+    status?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
+  }
+
+  export type ContractAvgOrderByAggregateInput = {
+    amount?: SortOrder
   }
 
   export type ContractMaxOrderByAggregateInput = {
     id?: SortOrder
     start_date?: SortOrder
     end_date?: SortOrder
+    contract_type?: SortOrder
+    position?: SortOrder
+    amount?: SortOrder
+    file_url?: SortOrder
     employee_id?: SortOrder
     organization_id?: SortOrder
+    status?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
   }
@@ -8048,10 +8352,55 @@ export namespace Prisma {
     id?: SortOrder
     start_date?: SortOrder
     end_date?: SortOrder
+    contract_type?: SortOrder
+    position?: SortOrder
+    amount?: SortOrder
+    file_url?: SortOrder
     employee_id?: SortOrder
     organization_id?: SortOrder
+    status?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
+  }
+
+  export type ContractSumOrderByAggregateInput = {
+    amount?: SortOrder
+  }
+
+  export type EnumContractTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ContractType | EnumContractTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ContractType[] | ListEnumContractTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ContractType[] | ListEnumContractTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumContractTypeWithAggregatesFilter<$PrismaModel> | $Enums.ContractType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumContractTypeFilter<$PrismaModel>
+    _max?: NestedEnumContractTypeFilter<$PrismaModel>
+  }
+
+  export type DecimalWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedDecimalFilter<$PrismaModel>
+    _sum?: NestedDecimalFilter<$PrismaModel>
+    _min?: NestedDecimalFilter<$PrismaModel>
+    _max?: NestedDecimalFilter<$PrismaModel>
+  }
+
+  export type EnumContractStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ContractStatus | EnumContractStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ContractStatus[] | ListEnumContractStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ContractStatus[] | ListEnumContractStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumContractStatusWithAggregatesFilter<$PrismaModel> | $Enums.ContractStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumContractStatusFilter<$PrismaModel>
+    _max?: NestedEnumContractStatusFilter<$PrismaModel>
   }
 
   export type UuidNullableFilter<$PrismaModel = never> = {
@@ -8366,6 +8715,22 @@ export namespace Prisma {
     connect?: OrganizationWhereUniqueInput
   }
 
+  export type EnumContractTypeFieldUpdateOperationsInput = {
+    set?: $Enums.ContractType
+  }
+
+  export type DecimalFieldUpdateOperationsInput = {
+    set?: Decimal | DecimalJsLike | number | string
+    increment?: Decimal | DecimalJsLike | number | string
+    decrement?: Decimal | DecimalJsLike | number | string
+    multiply?: Decimal | DecimalJsLike | number | string
+    divide?: Decimal | DecimalJsLike | number | string
+  }
+
+  export type EnumContractStatusFieldUpdateOperationsInput = {
+    set?: $Enums.ContractStatus
+  }
+
   export type EmployeeUpdateOneRequiredWithoutContractsNestedInput = {
     create?: XOR<EmployeeCreateWithoutContractsInput, EmployeeUncheckedCreateWithoutContractsInput>
     connectOrCreate?: EmployeeCreateOrConnectWithoutContractsInput
@@ -8576,6 +8941,67 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type NestedEnumContractTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.ContractType | EnumContractTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ContractType[] | ListEnumContractTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ContractType[] | ListEnumContractTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumContractTypeFilter<$PrismaModel> | $Enums.ContractType
+  }
+
+  export type NestedDecimalFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
+  }
+
+  export type NestedEnumContractStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.ContractStatus | EnumContractStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ContractStatus[] | ListEnumContractStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ContractStatus[] | ListEnumContractStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumContractStatusFilter<$PrismaModel> | $Enums.ContractStatus
+  }
+
+  export type NestedEnumContractTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ContractType | EnumContractTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ContractType[] | ListEnumContractTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ContractType[] | ListEnumContractTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumContractTypeWithAggregatesFilter<$PrismaModel> | $Enums.ContractType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumContractTypeFilter<$PrismaModel>
+    _max?: NestedEnumContractTypeFilter<$PrismaModel>
+  }
+
+  export type NestedDecimalWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedDecimalFilter<$PrismaModel>
+    _sum?: NestedDecimalFilter<$PrismaModel>
+    _min?: NestedDecimalFilter<$PrismaModel>
+    _max?: NestedDecimalFilter<$PrismaModel>
+  }
+
+  export type NestedEnumContractStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ContractStatus | EnumContractStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ContractStatus[] | ListEnumContractStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ContractStatus[] | ListEnumContractStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumContractStatusWithAggregatesFilter<$PrismaModel> | $Enums.ContractStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumContractStatusFilter<$PrismaModel>
+    _max?: NestedEnumContractStatusFilter<$PrismaModel>
+  }
+
   export type NestedUuidNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -8620,6 +9046,7 @@ export namespace Prisma {
 
   export type EmployeeCreateWithoutOrganizationInput = {
     id?: string
+    employee_no: string
     email: string
     first_name: string
     last_name: string
@@ -8632,6 +9059,7 @@ export namespace Prisma {
 
   export type EmployeeUncheckedCreateWithoutOrganizationInput = {
     id?: string
+    employee_no: string
     email: string
     first_name: string
     last_name: string
@@ -8686,6 +9114,11 @@ export namespace Prisma {
     id?: string
     start_date: Date | string
     end_date?: Date | string | null
+    contract_type: $Enums.ContractType
+    position: string
+    amount: Decimal | DecimalJsLike | number | string
+    file_url?: string | null
+    status?: $Enums.ContractStatus
     created_at?: Date | string | null
     updated_at?: Date | string | null
     employee: EmployeeCreateNestedOneWithoutContractsInput
@@ -8695,7 +9128,12 @@ export namespace Prisma {
     id?: string
     start_date: Date | string
     end_date?: Date | string | null
+    contract_type: $Enums.ContractType
+    position: string
+    amount: Decimal | DecimalJsLike | number | string
+    file_url?: string | null
     employee_id: string
+    status?: $Enums.ContractStatus
     created_at?: Date | string | null
     updated_at?: Date | string | null
   }
@@ -8731,6 +9169,7 @@ export namespace Prisma {
     OR?: EmployeeScalarWhereInput[]
     NOT?: EmployeeScalarWhereInput | EmployeeScalarWhereInput[]
     id?: UuidFilter<"Employee"> | string
+    employee_no?: StringFilter<"Employee"> | string
     email?: StringFilter<"Employee"> | string
     first_name?: StringFilter<"Employee"> | string
     last_name?: StringFilter<"Employee"> | string
@@ -8794,8 +9233,13 @@ export namespace Prisma {
     id?: UuidFilter<"Contract"> | string
     start_date?: DateTimeFilter<"Contract"> | Date | string
     end_date?: DateTimeNullableFilter<"Contract"> | Date | string | null
+    contract_type?: EnumContractTypeFilter<"Contract"> | $Enums.ContractType
+    position?: StringFilter<"Contract"> | string
+    amount?: DecimalFilter<"Contract"> | Decimal | DecimalJsLike | number | string
+    file_url?: StringNullableFilter<"Contract"> | string | null
     employee_id?: UuidFilter<"Contract"> | string
     organization_id?: UuidFilter<"Contract"> | string
+    status?: EnumContractStatusFilter<"Contract"> | $Enums.ContractStatus
     created_at?: DateTimeNullableFilter<"Contract"> | Date | string | null
     updated_at?: DateTimeNullableFilter<"Contract"> | Date | string | null
   }
@@ -8837,6 +9281,11 @@ export namespace Prisma {
     id?: string
     start_date: Date | string
     end_date?: Date | string | null
+    contract_type: $Enums.ContractType
+    position: string
+    amount: Decimal | DecimalJsLike | number | string
+    file_url?: string | null
+    status?: $Enums.ContractStatus
     created_at?: Date | string | null
     updated_at?: Date | string | null
     organization: OrganizationCreateNestedOneWithoutContractsInput
@@ -8846,7 +9295,12 @@ export namespace Prisma {
     id?: string
     start_date: Date | string
     end_date?: Date | string | null
+    contract_type: $Enums.ContractType
+    position: string
+    amount: Decimal | DecimalJsLike | number | string
+    file_url?: string | null
     organization_id: string
+    status?: $Enums.ContractStatus
     created_at?: Date | string | null
     updated_at?: Date | string | null
   }
@@ -8918,6 +9372,7 @@ export namespace Prisma {
 
   export type EmployeeCreateWithoutContractsInput = {
     id?: string
+    employee_no: string
     email: string
     first_name: string
     last_name: string
@@ -8930,6 +9385,7 @@ export namespace Prisma {
 
   export type EmployeeUncheckedCreateWithoutContractsInput = {
     id?: string
+    employee_no: string
     email: string
     first_name: string
     last_name: string
@@ -8991,6 +9447,7 @@ export namespace Prisma {
 
   export type EmployeeUpdateWithoutContractsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    employee_no?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
@@ -9003,6 +9460,7 @@ export namespace Prisma {
 
   export type EmployeeUncheckedUpdateWithoutContractsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    employee_no?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
@@ -9126,6 +9584,7 @@ export namespace Prisma {
 
   export type EmployeeCreateManyOrganizationInput = {
     id?: string
+    employee_no: string
     email: string
     first_name: string
     last_name: string
@@ -9149,13 +9608,19 @@ export namespace Prisma {
     id?: string
     start_date: Date | string
     end_date?: Date | string | null
+    contract_type: $Enums.ContractType
+    position: string
+    amount: Decimal | DecimalJsLike | number | string
+    file_url?: string | null
     employee_id: string
+    status?: $Enums.ContractStatus
     created_at?: Date | string | null
     updated_at?: Date | string | null
   }
 
   export type EmployeeUpdateWithoutOrganizationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    employee_no?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
@@ -9168,6 +9633,7 @@ export namespace Prisma {
 
   export type EmployeeUncheckedUpdateWithoutOrganizationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    employee_no?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
@@ -9180,6 +9646,7 @@ export namespace Prisma {
 
   export type EmployeeUncheckedUpdateManyWithoutOrganizationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    employee_no?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     first_name?: StringFieldUpdateOperationsInput | string
     last_name?: StringFieldUpdateOperationsInput | string
@@ -9223,6 +9690,11 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     start_date?: DateTimeFieldUpdateOperationsInput | Date | string
     end_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    contract_type?: EnumContractTypeFieldUpdateOperationsInput | $Enums.ContractType
+    position?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    file_url?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumContractStatusFieldUpdateOperationsInput | $Enums.ContractStatus
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     employee?: EmployeeUpdateOneRequiredWithoutContractsNestedInput
@@ -9232,7 +9704,12 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     start_date?: DateTimeFieldUpdateOperationsInput | Date | string
     end_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    contract_type?: EnumContractTypeFieldUpdateOperationsInput | $Enums.ContractType
+    position?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    file_url?: NullableStringFieldUpdateOperationsInput | string | null
     employee_id?: StringFieldUpdateOperationsInput | string
+    status?: EnumContractStatusFieldUpdateOperationsInput | $Enums.ContractStatus
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -9241,7 +9718,12 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     start_date?: DateTimeFieldUpdateOperationsInput | Date | string
     end_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    contract_type?: EnumContractTypeFieldUpdateOperationsInput | $Enums.ContractType
+    position?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    file_url?: NullableStringFieldUpdateOperationsInput | string | null
     employee_id?: StringFieldUpdateOperationsInput | string
+    status?: EnumContractStatusFieldUpdateOperationsInput | $Enums.ContractStatus
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -9250,7 +9732,12 @@ export namespace Prisma {
     id?: string
     start_date: Date | string
     end_date?: Date | string | null
+    contract_type: $Enums.ContractType
+    position: string
+    amount: Decimal | DecimalJsLike | number | string
+    file_url?: string | null
     organization_id: string
+    status?: $Enums.ContractStatus
     created_at?: Date | string | null
     updated_at?: Date | string | null
   }
@@ -9259,6 +9746,11 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     start_date?: DateTimeFieldUpdateOperationsInput | Date | string
     end_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    contract_type?: EnumContractTypeFieldUpdateOperationsInput | $Enums.ContractType
+    position?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    file_url?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumContractStatusFieldUpdateOperationsInput | $Enums.ContractStatus
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     organization?: OrganizationUpdateOneRequiredWithoutContractsNestedInput
@@ -9268,7 +9760,12 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     start_date?: DateTimeFieldUpdateOperationsInput | Date | string
     end_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    contract_type?: EnumContractTypeFieldUpdateOperationsInput | $Enums.ContractType
+    position?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    file_url?: NullableStringFieldUpdateOperationsInput | string | null
     organization_id?: StringFieldUpdateOperationsInput | string
+    status?: EnumContractStatusFieldUpdateOperationsInput | $Enums.ContractStatus
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -9277,7 +9774,12 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     start_date?: DateTimeFieldUpdateOperationsInput | Date | string
     end_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    contract_type?: EnumContractTypeFieldUpdateOperationsInput | $Enums.ContractType
+    position?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    file_url?: NullableStringFieldUpdateOperationsInput | string | null
     organization_id?: StringFieldUpdateOperationsInput | string
+    status?: EnumContractStatusFieldUpdateOperationsInput | $Enums.ContractStatus
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
